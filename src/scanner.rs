@@ -16,7 +16,8 @@ pub struct Match {
 }
 
 /// Scans a log file using the provided rules and prints matches in a formatted table.
-pub fn scan_log<P: AsRef<std::path::Path>>(log_path: P, rules: &[Rule]) -> io::Result<()> {
+/// Returns the number of matches found.
+pub fn scan_log<P: AsRef<std::path::Path>>(log_path: P, rules: &[Rule]) -> io::Result<usize> {
     let file = File::open(log_path)?;
     let reader = BufReader::new(file);
 
@@ -73,9 +74,10 @@ pub fn scan_log<P: AsRef<std::path::Path>>(log_path: P, rules: &[Rule]) -> io::R
         ]));
     }
 
+    let count = table.row_count();
     println!("{table}");
 
-    Ok(())
+    Ok(count)
 }
 
 #[cfg(test)]

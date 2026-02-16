@@ -21,7 +21,11 @@ fn main() -> std::io::Result<()> {
     let rules = rules::load_rules(rules_file)?;
     info!("Loaded {} rules", rules.len());
 
-    scanner::scan_log(log_file, &rules)?;
+    let findings = scanner::scan_log(log_file, &rules)?;
+
+    if findings > 0 {
+        std::process::exit(1);
+    }
 
     Ok(())
 }
