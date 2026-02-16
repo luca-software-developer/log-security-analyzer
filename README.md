@@ -2,7 +2,7 @@
 
 # Log Security Analyzer
 
-![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue)
+![Version: 1.1.0](https://img.shields.io/badge/version-1.1.0-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
 A Rust CLI tool to scan log files and detect exposed secrets (tokens, API keys,
@@ -12,6 +12,7 @@ credentials) using configurable regex rules in TOML format.
 
 - Line-by-line scanning of arbitrary log files
 - Detection rules defined in TOML files, easily extensible
+- Ruleset includes via `includes` field for composable rulesets
 - Advanced regex support (lookahead/lookbehind) via `fancy-regex`
 - Severity levels: `critical`, `high`, `medium`, `low`
 - Formatted table output with color-coded severity
@@ -31,6 +32,13 @@ The default ruleset (`rulesets/default.toml`) detects:
 | PostgreSQL Connection String | high     |
 | MySQL Connection String      | high     |
 | JWT Token                    | high     |
+
+The PII ruleset (`rulesets/pii.toml`) includes the default rules and adds:
+
+| Secret              | Severity |
+|---------------------|----------|
+| Italian Fiscal Code | high     |
+| IBAN                | high     |
 
 ## Requirements
 
@@ -79,6 +87,21 @@ severity = "high"
 
 Valid values for `severity`: `critical`, `high`, `medium`, `low`.
 
+You can include rules from other rulesets using the `includes` field:
+
+```toml
+includes = ["default.toml"]
+
+[[rules]]
+id = "my-rule"
+description = "Additional rule"
+regex = '''pattern_regex'''
+tags = ["tag1"]
+severity = "high"
+```
+
+Paths are resolved relative to the including file.
+
 ## Project Structure
 
 ```
@@ -90,6 +113,7 @@ src/
   severity.rs  # Severity level enum
 rulesets/
   default.toml # Default ruleset
+  pii.toml     # PII ruleset (includes default)
 logs/
   app.log      # Sample log file
 ```
