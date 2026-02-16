@@ -4,6 +4,7 @@
 
 ![Version: 1.1.0](https://img.shields.io/badge/version-1.1.0-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
+![CI](https://github.com/luca-software-developer/log-security-analyzer/actions/workflows/ci.yml/badge.svg)
 
 A Rust CLI tool to scan log files and detect exposed secrets (tokens, API keys,
 credentials) using configurable regex rules in TOML format.
