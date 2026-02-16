@@ -1,4 +1,4 @@
-<img width="144" height="144" alt="log-security-analyzer" src="https://github.com/user-attachments/assets/5575b52a-89d0-43ba-85f9-9b5497527a9e" />
+<img width="144" height="144" alt="log-security-analyzer" src="assets/logo.png" />
 
 # Log Security Analyzer
 
