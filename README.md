@@ -5,24 +5,23 @@
 ![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
-Tool CLI in Rust per scansionare file di log e individuare segreti esposti (
-token, chiavi API, credenziali) tramite regole regex configurabili in formato
-TOML.
+A Rust CLI tool to scan log files and detect exposed secrets (tokens, API keys,
+credentials) using configurable regex rules in TOML format.
 
-## Funzionalità
+## Features
 
-- Scansione riga per riga di file di log arbitrari
-- Regole di rilevamento definite in file TOML, facilmente estendibili
-- Supporto a regex avanzate (lookahead/lookbehind) tramite `fancy-regex`
-- Livelli di severità: `critical`, `high`, `medium`, `low`
-- Output formattato in tabella con colori per severità
-- Risultati ordinati per severità decrescente
+- Line-by-line scanning of arbitrary log files
+- Detection rules defined in TOML files, easily extensible
+- Advanced regex support (lookahead/lookbehind) via `fancy-regex`
+- Severity levels: `critical`, `high`, `medium`, `low`
+- Formatted table output with color-coded severity
+- Results sorted by descending severity
 
-## Regole incluse
+## Included Rules
 
-Il ruleset di default (`rulesets/default.toml`) rileva:
+The default ruleset (`rulesets/default.toml`) detects:
 
-| Segreto                      | Severità |
+| Secret                       | Severity |
 |------------------------------|----------|
 | GitHub Personal Access Token | critical |
 | AWS Secret Access Key        | critical |
@@ -33,7 +32,7 @@ Il ruleset di default (`rulesets/default.toml`) rileva:
 | MySQL Connection String      | high     |
 | JWT Token                    | high     |
 
-## Requisiti
+## Requirements
 
 - Rust 1.70+
 
@@ -43,67 +42,66 @@ Il ruleset di default (`rulesets/default.toml`) rileva:
 cargo build --release
 ```
 
-Il binario viene generato in `target/release/log-security-analyzer`.
+The binary is generated at `target/release/log-security-analyzer`.
 
-## Utilizzo
+## Usage
 
 ```bash
 log-security-analyzer <log_file> <rules_file>
 ```
 
-Esempio con i file inclusi nel repository:
+Example with the files included in the repository:
 
 ```bash
 cargo run -- logs/app.log rulesets/default.toml
 ```
 
-### Logging di debug
+### Debug Logging
 
-Il tool usa `env_logger`. Per abilitare i log interni:
+The tool uses `env_logger`. To enable internal logs:
 
 ```bash
 RUST_LOG=info cargo run -- logs/app.log rulesets/default.toml
 ```
 
-## Creare regole personalizzate
+## Creating Custom Rules
 
-Creare un file `.toml` con la seguente struttura:
+Create a `.toml` file with the following structure:
 
 ```toml
 [[rules]]
 id = "my-rule"
-description = "Descrizione del segreto"
+description = "Description of the secret"
 regex = '''pattern_regex'''
 tags = ["tag1", "tag2"]
 severity = "high"
 ```
 
-Valori validi per `severity`: `critical`, `high`, `medium`, `low`.
+Valid values for `severity`: `critical`, `high`, `medium`, `low`.
 
-## Struttura del progetto
+## Project Structure
 
 ```
 src/
-  main.rs      # Entry point CLI
-  lib.rs       # Interfaccia pubblica della libreria
-  rules.rs     # Parsing delle regole da TOML
-  scanner.rs   # Logica di scansione e output tabellare
-  severity.rs  # Enum dei livelli di severità
+  main.rs      # CLI entry point
+  lib.rs       # Public library interface
+  rules.rs     # Rule parsing from TOML
+  scanner.rs   # Scanning logic and table output
+  severity.rs  # Severity level enum
 rulesets/
-  default.toml # Ruleset predefinito
+  default.toml # Default ruleset
 logs/
-  app.log      # File di log di esempio
+  app.log      # Sample log file
 ```
 
-## Test
+## Testing
 
 ```bash
 cargo test
 ```
 
-## Licenza
+## License
 
-Questo progetto è distribuito sotto licenza MIT. Consulta il file [LICENSE](LICENSE) per i dettagli completi.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details.
 
 Copyright (c) 2026 Luca Dello Russo
-
