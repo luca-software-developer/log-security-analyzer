@@ -1,4 +1,9 @@
-# log-security-analyzer
+<img width="144" height="144" alt="log-security-analyzer" src="https://github.com/user-attachments/assets/5575b52a-89d0-43ba-85f9-9b5497527a9e" />
+
+# Log Security Analyzer
+
+![Version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
 Tool CLI in Rust per scansionare file di log e individuare segreti esposti (
 token, chiavi API, credenziali) tramite regole regex configurabili in formato
@@ -101,3 +106,4 @@ cargo test
 Questo progetto è distribuito sotto licenza MIT. Consulta il file [LICENSE](LICENSE) per i dettagli completi.
 
 Copyright (c) 2026 Luca Dello Russo
+
